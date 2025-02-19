@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Work Jams</title>
+
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Judson:wght@400;700&display=swap");
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --background: #121212; /* Dark background */
+                    --surface: #1e1e1e; /* Darker grey for surfaces */
+                    --text: #e0e0e0; /* Light grey text */
+                    --white-text: #ffffff; /* White text */
+                    --accent: #007bff; /* Primary blue accent */
+                    --light-accent: #66b2ff; /* Lighter blue accent */
+                    --muted: #9e9e9e; /* Muted grey text */
+                    --border: #333333; /* Dark grey borders */
+                }
+            }
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --background: #ffffff; /* White background */
+                    --surface: #f8f9fa; /* Light grey for surfaces */
+                    --text: #212529; /* Dark grey text */
+                    --white-text: #ffffff; /* White text */
+                    --accent: #007bff; /* Primary blue accent */
+                    --light-accent: #66b2ff; /* Lighter blue accent */
+                    --muted: #6c757d; /* Muted grey text */
+                    --border: #dee2e6; /* Light grey borders */
+                }
+            }
+
+            h1 {
+                font-family: "Judson", serif;
+            }
+            body {
+                margin: 0 auto;
+                padding: 24px; /* Increased padding for better spacing */
+                background-color: var(--background);
+                color: var(--text);
+                font-family: "Inter", sans-serif;
+                line-height: 1.6;
+                font-size: 16px;
+                max-width: 800px;
+            }
+
+            main {
+                height: 100vh; /* Full viewport height */
+            }
+
+            .button-container {
+                background: var(--surface);
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                display: flex;
+                width: 48px;
+                height: 48px;
+                transition: transform 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            svg {
+                width: 32px;
+                height: 32px;
+            }
+            img {
+                border-radius: 8px;
+            }
+
+            #youtubePlayer {
+                display: none;
+                width: 0;
+                height: 0;
+            }
+
+            a {
+                color: var(--accent);
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>A little work music</h1>
+            <p>
+                A bit of a rip on Levelsio's idea, but this is a simple place
+                for me to get to my study music in one click, the music will
+                chnge from time to time but the goal is simple. Always have my
+                Jams
+            </p>
+            <img src="photo.jpeg" alt="Image Description" />
+            <div class="button-container" id="playPauseButton">
+                <!-- Default Play Icon -->
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id="icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-play"
+                >
+                    <polygon points="6 3 20 12 6 21 6 3" />
+                </svg>
+            </div>
+
+            <iframe
+                id="youtubePlayer"
+                src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1"
+                frameborder="0"
+                allow="autoplay"
+            >
+            </iframe>
+        </main>
+        <footer>
+            Photo by
+            <a
+                href="https://unsplash.com/@steve_g_?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                >Steve Gribble</a
+            >
+            on
+            <a
+                href="https://unsplash.com/photos/a-desert-landscape-with-mountains-in-the-distance-r69BCa__bRQ?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                >Unsplash</a
+            > music is from  <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk">lofi hip hop radio - beats to relax/study to</a>
+            <div>
+                Site with ❤️ by <a target="_blank" href="https://fulton.software"> Fulton Browne</a>
+            </div>
+            <div>
+        </footer>
+        <script>
+            let isPlaying = false;
+            const button = document.getElementById("playPauseButton");
+            const icon = document.getElementById("icon");
+            const player = document.getElementById("youtubePlayer");
+
+            button.addEventListener("click", function () {
+                if (!isPlaying) {
+                    player.contentWindow.postMessage(
+                        '{"event":"command","func":"playVideo","args":""}',
+                        "*",
+                    );
+                    icon.innerHTML =
+                        '<rect x="14" y="4" width="4" height="16" rx="1" /> <rect x="6" y="4" width="4" height="16" rx="1" />'; // Pause icon
+                } else {
+                    player.contentWindow.postMessage(
+                        '{"event":"command","func":"pauseVideo","args":""}',
+                        "*",
+                    );
+                    icon.innerHTML = '<polygon points="6 3 20 12 6 21 6 3" />'; // Play icon
+                }
+                isPlaying = !isPlaying;
+            });
+        </script>
+    </body>
+</html>
